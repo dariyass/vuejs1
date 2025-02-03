@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script defer src="js/vue.min.js"></script>
+    <script defer src="js/main.js"></script>
+    <title>Product App</title>
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+<body>
+    <div id="app">
+
+        <div class="product">
+
+            <div class="product-image">
+                <img v-bind:src="image" v-bind:alt="altText" />
+
+            </div>
+
+            <div class="product-info">
+                <h1>{{ product }}</h1>
+                <p>{{description}}</p>
+                <a v-bind:href="link">More products like this.</a>
+                <p v-if="inventory > 10">In stock</p>
+                <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
+                <p v-else>Out of stock</p>
+                <span v-if="onSale">on Sale</span>
+                <ul>
+                    <li v-for="detail in details">{{ detail }}</li>
+                </ul>
+
+                <div v-for="variant in variants" :key="variant.variantId">
+                    <p>{{ variant.variantColor }}</p>
+                </div>
+
+                <div v-for=""
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</body>
+</html>
