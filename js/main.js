@@ -48,7 +48,7 @@ let app = new Vue({
                 return this.brand + ' ' + this.product;
             }
         },
-
+f
 
 
 
