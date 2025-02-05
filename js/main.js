@@ -2,7 +2,7 @@ Vue.component('product', {
     props: {
         premium: {
             type: Boolean,
-            required: true
+            required: true,
         }
 
     },
@@ -25,6 +25,7 @@ Vue.component('product', {
                 <span>{{Sale}}</span>
              <p>Shipping: {{ shipping }}</p>
              <product-details></product-details>
+             
 
 
                 <ul>
@@ -47,14 +48,15 @@ Vue.component('product', {
                     Add to cart
                 </button>
                 <button v-on:click="removeFromCart">Remove from cart</button>
+                
 
             </div>
+            
 
            </div>
  `,
     data() {
         return {
-            premium: true,
             product: "Socks",
             brand: "Vue Mastery",
             description: "A pair of warm, fuzzy socks.",
@@ -66,7 +68,7 @@ Vue.component('product', {
             inventory: 100,
             // details: ['80% cotton', '20% polyester', 'Gender-neutral'],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-            cart: 0,
+            cart: [],
             variants: [
                 {
                     variantId: 2234,
@@ -84,23 +86,15 @@ Vue.component('product', {
         }
     },
     methods: {
-
         updateCart(id) {
             this.cart.push(id);
-        }
-    }
-
-
+        },
         addToCart() {
-            this.$emit('add-to-cart');
             this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
-
         },
 
         removeFromCart() {
-            if (this.cart > 0) {
-                this.cart -= 1
-            }
+            this.$emit('remove-from-cart', this.variants[this.selectedVariant].variantId);
         },
         updateProduct(index) {
             this.selectedVariant = index;
@@ -109,8 +103,9 @@ Vue.component('product', {
         inStock() {
             return this.variants[this.selectedVariant].variantQuantity
         },
-
     },
+
+
     computed: {
         title() {
             return this.brand + ' ' + this.product;
@@ -141,6 +136,12 @@ Vue.component('product-details', {
         return {
             details: ['80% cotton', '20% polyester', 'Gender-neutral'],
         }
+    },
+    methods: {
+        addToCart(id) {
+            this.$emit('add-to-cart',
+                this.variants[this.selectedVariant].variantId);
+        },
     }
 
 })
@@ -149,8 +150,71 @@ let app = new Vue({
     el: '#app',
     data: {
         premium: true,
-        cart: []
+        cart: [],
+    },
+    methods: {
+        addToCart(id) {
+            this.cart.push(id);
+            console.log('Added to cart:', id);
+        },
+        removeFromCart(id) {
+            this.cart = this.cart.filter(item => item !== id);
+            console.log('Removed from cart:', id);
+        }
     }
 })
+
+Vue.component('product-review', {
+    template: `
+   <input v-model="name">
+   <form class="review-form" @submit.prevent="onSubmit">
+ <p>
+   <label for="name">Name:</label>
+   <input id="name" v-model="name" placeholder="name">
+ </p>
+
+ <p>
+   <label for="review">Review:</label>
+   <textarea id="review" v-model="review"></textarea>
+ </p>
+
+ <p>
+   <label for="rating">Rating:</label>
+   <select id="rating" v-model.number="rating">
+     <option>5</option>
+     <option>4</option>
+     <option>3</option>
+     <option>2</option>
+     <option>1</option>
+   </select>
+ </p>
+
+ <p>
+   <input type="submit" value="Submit"> 
+ </p>
+</form>
+ `,
+    data() {
+        return {
+            name: null,
+            review: null,
+            rating: null
+        }
+    },
+    methods:{
+        onSubmit() {
+            let productReview = {
+                name: this.name,
+                review: this.review,
+                rating: this.rating
+            }
+            this.$emit('review-submitted', productReview)
+            this.name = null
+            this.review = null
+            this.rating = null
+        }
+    }
+})
+
 
 
