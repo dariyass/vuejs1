@@ -24,9 +24,7 @@ Vue.component('product', {
                 <p v-else :class="{outOfStock: !inStock}">Out of stock</p>
                 <span>{{Sale}}</span>
              <p>Shipping: {{ shipping }}</p>
-                <ul>
-                    <li v-for="detail in details">{{ detail }}</li>
-                </ul>
+             <product-details></product-details>
 
 
                 <ul>
@@ -41,13 +39,6 @@ Vue.component('product', {
                         @mouseover="updateProduct(index)">
 
             </div>
-
-
-
-            <div class="cart">
-                    <p>Cart({{ cart }})</p>
-                </div>
-
                 <button
                         v-on:click="addToCart"
                         :disabled="!inStock"
@@ -73,7 +64,7 @@ Vue.component('product', {
             link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks",
             inStock: true,
             inventory: 100,
-            details: ['80% cotton', '20% polyester', 'Gender-neutral'],
+            // details: ['80% cotton', '20% polyester', 'Gender-neutral'],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
             cart: 0,
             variants: [
@@ -93,9 +84,19 @@ Vue.component('product', {
         }
     },
     methods: {
+
+        updateCart(id) {
+            this.cart.push(id);
+        }
+    }
+
+
         addToCart() {
-            this.cart += 1
+            this.$emit('add-to-cart');
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
+
         },
+
         removeFromCart() {
             if (this.cart > 0) {
                 this.cart -= 1
@@ -132,10 +133,23 @@ Vue.component('product', {
     }
 })
 
+Vue.component('product-details', {
+    template: ` <ul>
+                    <li v-for="detail in details">{{ detail }}</li>
+                </ul>`,
+    data() {
+        return {
+            details: ['80% cotton', '20% polyester', 'Gender-neutral'],
+        }
+    }
+
+})
+
 let app = new Vue({
     el: '#app',
     data: {
         premium: true,
+        cart: []
     }
 })
 
