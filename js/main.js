@@ -24,8 +24,6 @@ Vue.component('product', {
                 <span>{{Sale}}</span>
              <p>Shipping: {{ shipping }}</p>
              <product-details></product-details>     
-             <product-review @review-submitted="addReview"></product-review>
-             <product-tabs :reviews="reviews"></product-tabs>
 
                 <ul>
                     <li v-for="size in sizes">{{ size }}</li>
@@ -46,6 +44,8 @@ Vue.component('product', {
                 </button>
                 <button v-on:click="removeFromCart">Remove from cart</button>
             </div>
+             <product-tabs :reviews="reviews"></product-tabs>
+            
 <product-review @review-submitted="addReview"></product-review>
            </div>
  `,
@@ -63,6 +63,7 @@ Vue.component('product', {
             // details: ['80% cotton', '20% polyester', 'Gender-neutral'],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
             cart: [],
+            reviews: [],
             variants: [
                 {
                     variantId: 2234,
@@ -127,6 +128,7 @@ Vue.component('product-details', {
     data() {
         return {
             details: ['80% cotton', '20% polyester', 'Gender-neutral'],
+
         }
     },
     methods: {
@@ -176,7 +178,8 @@ Vue.component('product-review', {
             name: null,
             review: null,
             rating: null,
-            errors: []
+            errors: [],
+
         }
     },
     methods:{
@@ -233,31 +236,37 @@ Vue.component('product-tabs', {
          </ul>
        </div>
        <div v-show="selectedTab === 'Make a Review'">
-         <product-review @review-submitted="addReview"></product-review>
+<!--         <product-review @review-submitted="addReview"></product-review>-->
        </div>
      </div>
-     <product-review></product-review>
+<!--     <product-review></product-review>-->
 </div>
  `,
     data() {
         return {
             tabs: ['Reviews', 'Make a Review'],
-            selectedTab: 'Reviews'  // устанавливается с помощью @click
+            selectedTab: 'Reviews', // устанавливается с помощью @click
         }
 
     }
 })
+
+
 
 let app = new Vue({
     el: '#app',
     data: {
         premium: true,
         cart: [],
+        activeTab: 'Reviews',
     },
     methods: {
         addToCart(id) {
             this.cart.push(id);
             console.log('Added to cart:', id);
+        },
+        addReview(productReview) {
+            this.reviews.push(productReview)
         },
         removeFromCart(id) {
             this.cart = this.cart.filter(item => item !== id);
