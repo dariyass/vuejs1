@@ -250,7 +250,61 @@ Vue.component('product-tabs', {
 
     }
 })
-
+//
+// Vue.component('add-coustmer', {
+//     data(){
+//         return {
+//             activateTab: 'Reviews',
+//             reviews: [],
+//             newReview: {
+//                 name:``,
+//                 text:``
+//             }
+//         }
+//     },
+//     methods: {
+//         addReview() {
+//             if (this.newReview.name.trim(),
+//                 this.newReview.text.trim {
+//                 alert(`Заполните все поля`)
+//                 return;
+//                 this.reviews.push({ name: this.newReview.name, text: this.newReview.text });
+//                 this.newReview.name = ``;
+//                 this.newReview.text=``;
+//             }
+//         },
+//         components: {
+//         `reviews`: {
+//             props: [`reviews`],
+//                 template: `
+//                 <div v-if="reviews.length > 0"></div>
+// <h2><Отзывы</h2>
+// <ul>
+// <li v-for="review in reviews" :key="review.name">
+// </ul>
+// <div>
+// <div v-else>
+// <p> Пока нет отзывов</p>
+// </div>
+// </div>`
+//         },
+// `add-review`:{
+//             props:{
+//                 `addReview`:{
+//                 type:Function,
+//                 required:true,
+//                 }
+//             },
+//     data() {
+//                 return {
+//                     name:``,
+//                     text:``
+//                 }
+//     }
+//             }
+// }
+//     }
+// })
 
 
 let app = new Vue({
