@@ -45,7 +45,6 @@ Vue.component('product', {
                 <button v-on:click="removeFromCart">Remove from cart</button>
             </div>
              <product-tabs :reviews="reviews"></product-tabs>
-             
             
            </div>
  `,
