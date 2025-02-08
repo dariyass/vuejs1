@@ -45,8 +45,8 @@ Vue.component('product', {
                 <button v-on:click="removeFromCart">Remove from cart</button>
             </div>
              <product-tabs :reviews="reviews"></product-tabs>
+             
             
-<product-review @review-submitted="addReview"></product-review>
            </div>
  `,
     data() {
@@ -227,84 +227,36 @@ Vue.component('product-tabs', {
        </ul>
        <div v-show="selectedTab === 'Reviews'">
          <p v-if="!reviews.length">There are no reviews yet.</p>
-         <ul>
-           <li v-for="review in reviews">
-           <p>{{ review.name }}</p>
-           <p>Rating: {{ review.rating }}</p>
-           <p>{{ review.review }}</p>
+         <ul v-else>
+           <li v-for="review in reviews" :key="review.name">
+             <p><strong>{{ review.name }}</strong></p>
+             <p>Rating: {{ review.rating }}</p>
+             <p>{{ review.review }}</p>
            </li>
          </ul>
        </div>
        <div v-show="selectedTab === 'Make a Review'">
-<!--         <product-review @review-submitted="addReview"></product-review>-->
+         <product-review @review-submitted="addReview"></product-review>
        </div>
      </div>
-<!--     <product-review></product-review>-->
-</div>
  `,
     data() {
         return {
             tabs: ['Reviews', 'Make a Review'],
             selectedTab: 'Reviews', // устанавливается с помощью @click
         }
-
+    },
+    methods: {
+        addReview(productReview) {
+            this.reviews.push(productReview);
+        }
+    },
+    mounted() {
+        eventBus.$on('review-submitted', productReview => {
+            this.addReview(productReview);
+        });
     }
-})
-//
-// Vue.component('add-coustmer', {
-//     data(){
-//         return {
-//             activateTab: 'Reviews',
-//             reviews: [],
-//             newReview: {
-//                 name:``,
-//                 text:``
-//             }
-//         }
-//     },
-//     methods: {
-//         addReview() {
-//             if (this.newReview.name.trim(),
-//                 this.newReview.text.trim {
-//                 alert(`Заполните все поля`)
-//                 return;
-//                 this.reviews.push({ name: this.newReview.name, text: this.newReview.text });
-//                 this.newReview.name = ``;
-//                 this.newReview.text=``;
-//             }
-//         },
-//         components: {
-//         `reviews`: {
-//             props: [`reviews`],
-//                 template: `
-//                 <div v-if="reviews.length > 0"></div>
-// <h2><Отзывы</h2>
-// <ul>
-// <li v-for="review in reviews" :key="review.name">
-// </ul>
-// <div>
-// <div v-else>
-// <p> Пока нет отзывов</p>
-// </div>
-// </div>`
-//         },
-// `add-review`:{
-//             props:{
-//                 `addReview`:{
-//                 type:Function,
-//                 required:true,
-//                 }
-//             },
-//     data() {
-//                 return {
-//                     name:``,
-//                     text:``
-//                 }
-//     }
-//             }
-// }
-//     }
-// })
+});
 
 
 let app = new Vue({
@@ -313,6 +265,7 @@ let app = new Vue({
         premium: true,
         cart: [],
         activeTab: 'Reviews',
+        reviews: [],
     },
     methods: {
         addToCart(id) {
