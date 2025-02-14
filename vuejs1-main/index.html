@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script defer src="js/vue.min.js"></script>
+    <script defer src="js/main.js"></script>
+    <title>Product App</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="app">
+    <div class="cart">
+        <p>Cart ({{ cart.length }})</p>
+    </div>
+    <product :premium="premium" @add-to-cart="addToCart" @remove-from-cart="removeFromCart"></product>
+    <product-tabs :reviews="reviews" :shipping="shipping" :details="details"></product-tabs>
+
+</div>
+</body>
+</html>
