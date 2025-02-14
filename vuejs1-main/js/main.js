@@ -210,6 +210,7 @@ Vue.component('product-review', {
     }
 })
 
+
 Vue.component('product-tabs', {
     props: {
         reviews: {
