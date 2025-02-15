@@ -2,19 +2,21 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script defer src="js/vue.min.js"></script>
     <script defer src="js/main.js"></script>
-    <title>Product App</title>
     <link rel="stylesheet" href="css/main.css">
+    <title>Product App</title>
 </head>
 <body>
 <div id="app">
+
     <div class="cart">
-        <p>Cart ({{ cart.length }})</p>
+        <p>Cart({{ cart.length }})</p>
     </div>
-    <product :premium="premium" @add-to-cart="addToCart" @remove-from-cart="removeFromCart"></product>
+    <product :premium="premium" @add-to-cart="updateCart" @remove-from-cart="updateRemoveFromCart"></product>
 
 </div>
 </body>
